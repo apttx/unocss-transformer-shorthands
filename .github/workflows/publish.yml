@@ -1,0 +1,45 @@
+on:
+  push:
+    tags: 'v*'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      # setup
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: 'pnpm'
+      # build
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+      # publish
+      - run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+---
+on:
+  push:
+    tags: next
+
+jobs:
+  publish:
+    name: 'publish @next'
+    runs-on: ubuntu-latest
+    steps:
+      # setup
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: 'pnpm'
+      # build
+      - run: npm install --frozen-lockfile
+      - run: pnpm build
+      # publish
+      - run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

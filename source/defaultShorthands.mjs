@@ -1,0 +1,5 @@
+export * from './default-shorthands/padding.mjs'
+export * from './default-shorthands/margin.mjs'
+export * from './default-shorthands/background.mjs'
+export * from './default-shorthands/color.mjs'
+export * from './default-shorthands/text.mjs'
